@@ -1,21 +1,28 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using WebApplication1.DAL;
 using WebApplication1.Models;
+
 
 namespace WebApplication1.Controllers;
 
 public class HomeController : Controller
 {
+    /*private readonly ApplicationDbContext _db;*/
     private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, ApplicationDbContext db)
     {
         _logger = logger;
+        /*_db = db;*/
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        
+        /*var users = await _db.Users.ToListAsync();*/
+        return View();//users
     }
 
     public IActionResult Privacy()

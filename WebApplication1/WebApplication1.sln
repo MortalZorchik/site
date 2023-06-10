@@ -2,6 +2,14 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{2F586B5B-5C9E-4E29-81FD-7C77BF38867B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{B36D0536-C523-4B73-B400-66AE2DD78843}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1.DAL", "WebApplication1.DAL\WebApplication1.DAL.csproj", "{A379361B-929A-47DF-8B98-7AAC82E28B02}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{505B1869-84DF-4590-A0C6-E4442CA7BD06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1.Domain", "WebApplication1.Domain\WebApplication1.Domain.csproj", "{E5302525-BC12-4937-B7E4-2CD7F5E14580}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +20,17 @@ Global
 		{2F586B5B-5C9E-4E29-81FD-7C77BF38867B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F586B5B-5C9E-4E29-81FD-7C77BF38867B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F586B5B-5C9E-4E29-81FD-7C77BF38867B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A379361B-929A-47DF-8B98-7AAC82E28B02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A379361B-929A-47DF-8B98-7AAC82E28B02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A379361B-929A-47DF-8B98-7AAC82E28B02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A379361B-929A-47DF-8B98-7AAC82E28B02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5302525-BC12-4937-B7E4-2CD7F5E14580}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5302525-BC12-4937-B7E4-2CD7F5E14580}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5302525-BC12-4937-B7E4-2CD7F5E14580}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5302525-BC12-4937-B7E4-2CD7F5E14580}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A379361B-929A-47DF-8B98-7AAC82E28B02} = {B36D0536-C523-4B73-B400-66AE2DD78843}
+		{E5302525-BC12-4937-B7E4-2CD7F5E14580} = {505B1869-84DF-4590-A0C6-E4442CA7BD06}
 	EndGlobalSection
 EndGlobal
