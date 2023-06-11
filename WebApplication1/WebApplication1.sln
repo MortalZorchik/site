@@ -10,6 +10,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{505B18
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1.Domain", "WebApplication1.Domain\WebApplication1.Domain.csproj", "{E5302525-BC12-4937-B7E4-2CD7F5E14580}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{D502522E-A129-43D4-81D4-600E2B3C5417}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1.Service", "WebApplication1.Service\WebApplication1.Service.csproj", "{F303F7A9-8949-40A0-9310-4D6B570A5556}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,9 +32,14 @@ Global
 		{E5302525-BC12-4937-B7E4-2CD7F5E14580}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5302525-BC12-4937-B7E4-2CD7F5E14580}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5302525-BC12-4937-B7E4-2CD7F5E14580}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F303F7A9-8949-40A0-9310-4D6B570A5556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F303F7A9-8949-40A0-9310-4D6B570A5556}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F303F7A9-8949-40A0-9310-4D6B570A5556}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F303F7A9-8949-40A0-9310-4D6B570A5556}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A379361B-929A-47DF-8B98-7AAC82E28B02} = {B36D0536-C523-4B73-B400-66AE2DD78843}
 		{E5302525-BC12-4937-B7E4-2CD7F5E14580} = {505B1869-84DF-4590-A0C6-E4442CA7BD06}
+		{F303F7A9-8949-40A0-9310-4D6B570A5556} = {D502522E-A129-43D4-81D4-600E2B3C5417}
 	EndGlobalSection
 EndGlobal

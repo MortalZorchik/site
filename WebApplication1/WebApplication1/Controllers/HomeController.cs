@@ -1,30 +1,42 @@
 ﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.DAL;
 using WebApplication1.Models;
+using WebApplication1.Service.Interfaces;
 
 
 namespace WebApplication1.Controllers;
 
 public class HomeController : Controller
 {
-    /*private readonly ApplicationDbContext _db;*/
     private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger, ApplicationDbContext db)
+    private readonly IUserService _userService;
+    
+    public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, IUserService userService)
     {
         _logger = logger;
-        /*_db = db;*/
+        _userService = userService;
     }
 
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
     {
-        
-        /*var users = await _db.Users.ToListAsync();*/
-        return View();//users
+        return View();
     }
-
+    
+    [HttpGet]
+    /*[Authorize(Roles = "Admin")]*/
+    public async Task<IResult> GetUsers()
+    {
+        var response = await _userService.GetAllUsers();
+        if (response.StatusCode == Domain.StatusCode.OK)
+        {
+            return Results.Json(response.Data);
+        }
+        return Results.Json(response.Data);
+    }
+    
     public IActionResult Privacy()
     {
         return View();
