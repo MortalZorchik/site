@@ -1,6 +1,8 @@
 ﻿using WebApplication1.DAL.Interfaces;
 using WebApplication1.Domain;
 using WebApplication1.Domain.Entity;
+using WebApplication1.Domain.Extentions;
+using WebApplication1.Domain.Helpers;
 using WebApplication1.Domain.Response;
 using WebApplication1.Domain.ViewModels;
 using WebApplication1.Service.Interfaces;
@@ -29,7 +31,8 @@ public class UserService : IUserService
 
                 return baseResponse;
             }
-
+            
+            baseResponse.StatusCode = StatusCode.OK;
             baseResponse.Data = user;
             return baseResponse;
         }
@@ -56,7 +59,7 @@ public class UserService : IUserService
 
                 return baseResponse;
             }
-
+            baseResponse.StatusCode = StatusCode.OK;
             baseResponse.Data = user;
             return baseResponse;
         }
@@ -70,6 +73,42 @@ public class UserService : IUserService
             };
         }
     }
+    
+
+    public async Task<IBaseResponse<User>> UpdateUser(int id, UserViewModel userModel)
+    {
+        var baseResponse = new BaseResponse<User>();
+
+        try
+        {
+            var user = await _userRepository.Get(id);
+            if (user == null)
+            {
+                baseResponse.StatusCode = StatusCode.UserNotFound;
+                baseResponse.Description = "Пользователь не найден";
+                return baseResponse;
+            }
+            
+            user.Name = userModel.Name;
+            user.Password = userModel.Password;
+            user.Role = userModel.Role;
+            var user1 = await _userRepository.Update(user);
+            baseResponse.Data = user1; 
+            baseResponse.StatusCode = StatusCode.OK;
+            baseResponse.Description = "Пользователь добавлен";
+            return baseResponse;
+
+        }
+        catch (Exception e)
+        {
+            return new BaseResponse<User>()
+            {
+                Description = $"[UpdateUser] : {e.Message}",
+                StatusCode = StatusCode.InternalServerError
+            };
+        }
+    }
+
     public async Task<IBaseResponse<IEnumerable<User>>> GetAllUsers()
     {
         var baseResponse = new BaseResponse<IEnumerable<User>>();
@@ -98,12 +137,9 @@ public class UserService : IUserService
         }
     }
 
-    public async Task<IBaseResponse<bool>> DeleteUser(int id)
+    public async Task<BaseResponse<User>> DeleteUser(int id)
     {
-        var baseResponse = new BaseResponse<bool>()
-        {
-            Data = true
-        };
+        var baseResponse = new BaseResponse<User>();
         try
         {
             var user =  await _userRepository.Get(id);
@@ -111,18 +147,18 @@ public class UserService : IUserService
             {
                 baseResponse.Description = "Пользователь не найден";
                 baseResponse.StatusCode = StatusCode.UserNotFound;
-                baseResponse.Data = false;
                 
                 return baseResponse;
             }
 
-            await _userRepository.Delete(user);
-
+            var deletedUser = await _userRepository.Delete(user);
+            baseResponse.Data = deletedUser;
+            baseResponse.StatusCode = StatusCode.OK;
             return baseResponse;
         }
         catch (Exception e)
         {
-            return new BaseResponse<bool>()
+            return new BaseResponse<User>()
             {
                 Description = $"[DeleteUser] : {e.Message}",
                 StatusCode = StatusCode.InternalServerError
@@ -130,33 +166,57 @@ public class UserService : IUserService
         }
     }
 
-    public async Task<IBaseResponse<UserViewModel>> CreateUser(UserViewModel userViewModel)
+    public async Task<IBaseResponse<User>> CreateUser(UserViewModel userViewModel)
     {
-        var baseResponse = new BaseResponse<UserViewModel>();
+        var baseResponse = new BaseResponse<User>();
         try
         {
             var user = new User()
             {
                 Name = userViewModel.Name,
-                Password = userViewModel.Password,
+                Password = HashPasswordHelper.HashPassword(userViewModel.Password),
                 Role = (Role)Convert.ToInt32(userViewModel.Role)
             };
 
-            await _userRepository.Create(user);
-            
+            var createdUser = await _userRepository.Create(user);
+            baseResponse.Data = createdUser;
+            baseResponse.StatusCode = StatusCode.OK;
+            return baseResponse;
         }
         catch (Exception e)
         {
-            return new BaseResponse<UserViewModel>()
+            return new BaseResponse<User>()
             {
                 Description = $"[CreateUser] : {e.Message}",
                 StatusCode = StatusCode.InternalServerError
             };
         }
-        return baseResponse;
+        
+    }
+    
+    public BaseResponse<Dictionary<int, string>> GetTypes()
+    {
+        try
+        {
+            var types = ((Role[])Enum.GetValues(typeof(Role))).ToDictionary(k => (int)k, t => t.GetDisplayName());
+
+            return new BaseResponse<Dictionary<int, string>>()
+            {
+                Data = types,
+                StatusCode = StatusCode.OK
+            };
+        }
+        catch (Exception e)
+        {
+            return new BaseResponse<Dictionary<int, string>>()
+            {
+                Description = e.Message,
+                StatusCode = StatusCode.InternalServerError
+            };
+        }
     }
 
-    public async Task<IBaseResponse<bool>> UpdateUser(User userData)
+    /*public async Task<IBaseResponse<bool>> UpdateUser(User userData)
     {
         var baseResponse = new BaseResponse<bool>()
         {
@@ -177,7 +237,7 @@ public class UserService : IUserService
             user.Role = userData.Role;
             user.Name = userData.Name;
             await _userRepository.Update();
-
+            baseResponse.StatusCode = StatusCode.OK;
             return baseResponse;
         }
         catch (Exception e)
@@ -188,5 +248,5 @@ public class UserService : IUserService
                 StatusCode = StatusCode.InternalServerError
             };
         }
-    }
+    }*/
 }

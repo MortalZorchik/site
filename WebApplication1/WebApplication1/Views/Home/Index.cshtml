@@ -1,4 +1,4 @@
-﻿@*@model IEnumerable<WebApplication1.Domain.Entity.User>*@
+﻿@model WebApplication1.Domain.ViewModels.UserViewModel
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -8,12 +8,7 @@
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
-@*@foreach (var user in Model)
-{
-    <p>@user.Name</p>
-}*@
-
-    <h2>Список пользователей</h2>
+<h2>Список пользователей</h2>
     <div>
         <input type="hidden" id="userId" />
         <p>
@@ -21,10 +16,11 @@
             <input id="userName" />
         </p>
         <p>
-            Возраст:<br />
-            <input id="userAge" type="number" />
+            Пароль:<br />
+            <input id="userPassword" />
         </p>
-         <p>
+        <select asp-for="@Model.Role" class="form-control" id="userRole"></select>
+        <p style="margin-top: 100px">
             <button id="saveBtn">Сохранить</button>
             <button id="resetBtn">Сбросить</button>
         </p>
@@ -35,7 +31,7 @@
         </tbody>
     </table>
   
-    <script>
+<script>
     // Получение всех пользователей
         async function getUsers() {
           
@@ -59,7 +55,8 @@
         }
         // Получение одного пользователя
         async function getUser(id) {
-            const response = await fetch(`/api/users/${id}`, {
+            console.log(id)
+            const response = await fetch(`/Home/GetUser?id=`+id, {
                 method: "GET",
                 headers: { "Accept": "application/json" }
             });
@@ -67,7 +64,8 @@
                 const user = await response.json();
                 document.getElementById("userId").value = user.id;
                 document.getElementById("userName").value = user.name;
-                document.getElementById("userAge").value = user.age;
+                document.getElementById("userPassword").value = user.password;
+                document.getElementById("userRole").value = user.role;
             }
             else {
                 // если произошла ошибка, получаем сообщение об ошибке
@@ -76,18 +74,21 @@
             }
         }
         // Добавление пользователя
-        async function createUser(userName, userAge) {
+        async function createUser(userName, userPassword, userRole) {
   
-            const response = await fetch("api/users", {
+            const response = await fetch("Home/CreateUser?name="+userName+"&password="+userPassword+"&role"+userRole, {
                 method: "POST",
                 headers: { "Accept": "application/json", "Content-Type": "application/json" },
                 body: JSON.stringify({
                     name: userName,
-                    age: parseInt(userAge, 10)
+                    password: userPassword,
+                    role: userRole
                 })
             });
             if (response.ok === true) {
+                console.log(response);
                 const user = await response.json();
+                console.log(user);
                 document.querySelector("tbody").append(row(user));
             }
             else {
@@ -96,14 +97,15 @@
             }
         }
         // Изменение пользователя
-        async function editUser(userId, userName, userAge) {
-            const response = await fetch("api/users", {
+        async function editUser(userId, userName, userPassword, userRole) {
+            const response = await fetch("Home/UpdateUser?id="+userId+"&name="+userName+"&password="+userPassword+"&role"+userRole, {
                 method: "PUT",
                 headers: { "Accept": "application/json", "Content-Type": "application/json" },
                 body: JSON.stringify({
                     id: userId,
                     name: userName,
-                    age: parseInt(userAge, 10)
+                    password: userPassword,
+                    role: userRole
                 })
             });
             if (response.ok === true) {
@@ -117,7 +119,7 @@
         }
         // Удаление пользователя
         async function deleteUser(id) {
-            const response = await fetch(`/api/users/${id}`, {
+            const response = await fetch(`Home/DeleteUser?id=${id}`, {
                 method: "DELETE",
                 headers: { "Accept": "application/json" }
             });
@@ -135,11 +137,12 @@
         function reset() {
             document.getElementById("userId").value = 
             document.getElementById("userName").value = 
-            document.getElementById("userAge").value = "";
+            document.getElementById("userPassword").value = ""
+            document.getElementById("userRole").value = ""
         }
         // создание строки для таблицы
         function row(user) {
-  
+            console.log(user)
             const tr = document.createElement("tr");
             tr.setAttribute("data-rowid", user.id);
             
@@ -159,19 +162,23 @@
             roleTd.append(user.role);
             tr.append(roleTd);
   
-            const linksTd = document.createElement("td");
+           
   
-            const editLink = document.createElement("button"); 
-            editLink.append("Изменить");
-            editLink.addEventListener("click", async() => await getUser(user.id));
-            linksTd.append(editLink);
-  
-            const removeLink = document.createElement("button"); 
-            removeLink.append("Удалить");
-            removeLink.addEventListener("click", async () => await deleteUser(user.id));
-  
-            linksTd.append(removeLink);
-            tr.appendChild(linksTd);
+            if (user.role != 2){
+                const linksTd = document.createElement("td");
+                const editLink = document.createElement("button"); 
+                            editLink.append("Изменить");
+                            editLink.addEventListener("click", async() => await getUser(user.id));
+                            linksTd.append(editLink);
+                  
+                            const removeLink = document.createElement("button"); 
+                            removeLink.append("Удалить");
+                            removeLink.addEventListener("click", async () => await deleteUser(user.id));
+                  
+                            linksTd.append(removeLink);
+                            tr.appendChild(linksTd);
+            }
+            
   
             return tr;
         }
@@ -180,17 +187,42 @@
   
         // отправка формы
         document.getElementById("saveBtn").addEventListener("click", async () => {
-             
+            
             const id = document.getElementById("userId").value;
+            console.log(id)
             const name = document.getElementById("userName").value;
-            const age = document.getElementById("userAge").value;
-            if (id === "")
-                await createUser(name, age);
+            const password = document.getElementById("userPassword").value;
+            const role = document.getElementById("userRole").value;
+            if (id === ""){
+                await createUser(name, password,role);}
             else
-                await editUser(id, name, age);
+                await editUser(id, name, password,role);
             reset();
         });
   
         // загрузка пользователей
         getUsers();
     </script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/select2/js/select2.full.min.js"></script><script>
+$('#userRole').select2({
+   placeholder: "Выберите тип",
+   minimumInputLength: 0,
+   allowClear: true,
+   ajax: {
+        type: "POST",
+        url: "@Url.Action("GetTypes", "Home")",
+        dataType: "json",
+        processResults: function (result) {
+            return {
+                results: $.map(result, function (val, index) {
+                    return {
+                        id: index, 
+                        text: val
+                    };
+                }),
+            };
+        }
+    }
+});
+</script>

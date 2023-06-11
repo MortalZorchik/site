@@ -13,12 +13,12 @@ public class UserRepository : IUserRepository
         _db = db;
     }
 
-    public async Task<bool> Create(User entity)
+    public async Task<User> Create(User entity)
     {
         await _db.Users.AddAsync(entity);
         await _db.SaveChangesAsync();
 
-        return true;
+        return entity;
     }
 
     public async Task<User> Get(int id)
@@ -31,19 +31,19 @@ public class UserRepository : IUserRepository
         return _db.Users.ToListAsync();
     }
 
-    public async Task<bool> Delete(User entity)
+    public async Task<User> Delete(User entity)
     {
         _db.Users.Remove(entity);
         await _db.SaveChangesAsync();
 
-        return true;
+        return entity;
     }
 
-    public async Task<bool> Update()
+    public async Task<User> Update(User entity)
     {
+        _db.Users.Update(entity);
         await _db.SaveChangesAsync();
-
-        return true;
+        return entity;
     }
 
     public async Task<User> GetByName(string name)

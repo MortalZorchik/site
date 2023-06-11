@@ -15,4 +15,8 @@
       <ProjectReference Include="..\WebApplication1.Service\WebApplication1.Service.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="wwwroot\lib\select2\js" />
+    </ItemGroup>
+
 </Project>
