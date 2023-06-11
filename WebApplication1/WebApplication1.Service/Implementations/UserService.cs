@@ -90,8 +90,8 @@ public class UserService : IUserService
             }
             
             user.Name = userModel.Name;
-            user.Password = userModel.Password;
-            user.Role = userModel.Role;
+            user.Password = HashPasswordHelper.HashPassword(userModel.Password);
+            user.Role = (Role)Convert.ToInt32(userModel.Role);
             var user1 = await _userRepository.Update(user);
             baseResponse.Data = user1; 
             baseResponse.StatusCode = StatusCode.OK;
@@ -177,7 +177,7 @@ public class UserService : IUserService
                 Password = HashPasswordHelper.HashPassword(userViewModel.Password),
                 Role = (Role)Convert.ToInt32(userViewModel.Role)
             };
-
+            
             var createdUser = await _userRepository.Create(user);
             baseResponse.Data = createdUser;
             baseResponse.StatusCode = StatusCode.OK;

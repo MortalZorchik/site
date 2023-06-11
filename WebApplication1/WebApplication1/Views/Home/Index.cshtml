@@ -55,13 +55,14 @@
         }
         // Получение одного пользователя
         async function getUser(id) {
-            console.log(id)
             const response = await fetch(`/Home/GetUser?id=`+id, {
                 method: "GET",
                 headers: { "Accept": "application/json" }
             });
             if (response.ok === true) {
+             
                 const user = await response.json();
+                console.log(user.role);
                 document.getElementById("userId").value = user.id;
                 document.getElementById("userName").value = user.name;
                 document.getElementById("userPassword").value = user.password;
@@ -76,7 +77,7 @@
         // Добавление пользователя
         async function createUser(userName, userPassword, userRole) {
   
-            const response = await fetch("Home/CreateUser?name="+userName+"&password="+userPassword+"&role"+userRole, {
+            const response = await fetch("Home/CreateUser?name="+userName+"&password="+userPassword+"&role="+userRole, {
                 method: "POST",
                 headers: { "Accept": "application/json", "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -98,7 +99,8 @@
         }
         // Изменение пользователя
         async function editUser(userId, userName, userPassword, userRole) {
-            const response = await fetch("Home/UpdateUser?id="+userId+"&name="+userName+"&password="+userPassword+"&role"+userRole, {
+            console.log(userId, userName, userPassword, userRole);
+            const response = await fetch("Home/UpdateUser?id="+userId+"&name="+userName+"&password="+userPassword+"&role="+userRole, {
                 method: "PUT",
                 headers: { "Accept": "application/json", "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -110,6 +112,7 @@
             });
             if (response.ok === true) {
                 const user = await response.json();
+                console.log(user);
                 document.querySelector(`tr[data-rowid='${user.id}']`).replaceWith(row(user));
             }
             else {
@@ -189,7 +192,6 @@
         document.getElementById("saveBtn").addEventListener("click", async () => {
             
             const id = document.getElementById("userId").value;
-            console.log(id)
             const name = document.getElementById("userName").value;
             const password = document.getElementById("userPassword").value;
             const role = document.getElementById("userRole").value;
