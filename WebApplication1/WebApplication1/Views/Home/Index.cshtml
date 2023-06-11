@@ -17,9 +17,11 @@
         </p>
         <p>
             Пароль:<br />
-            <input id="userPassword" />
+            <input id="userPassword" asp-for="Password" type="password"/>
         </p>
-        <select asp-for="@Model.Role" class="form-control" id="userRole"></select>
+        <select asp-for="@Model.Role" id="userRole">
+            <option></option>
+        </select>
         <p style="margin-top: 100px">
             <button id="saveBtn">Сохранить</button>
             <button id="resetBtn">Сбросить</button>
@@ -208,7 +210,7 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/select2/js/select2.full.min.js"></script><script>
 $('#userRole').select2({
-   placeholder: "Выберите тип",
+   placeholder: "Выберите роль",
    minimumInputLength: 0,
    allowClear: true,
    ajax: {

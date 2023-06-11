@@ -5,19 +5,16 @@ namespace WebApplication1.Domain.Helpers;
 
 public class HashPasswordHelper
 {
-    const int keySize = 64;
-    const int iterations = 350000;
-    static HashAlgorithmName hashAlgorithm = HashAlgorithmName.SHA512;
+    
     
     public static string HashPassword(string password)
     {
-        var salt = RandomNumberGenerator.GetBytes(keySize);
-        var hash = Rfc2898DeriveBytes.Pbkdf2(
-            Encoding.UTF8.GetBytes(password),
-            salt,
-            iterations,
-            hashAlgorithm,
-            keySize);
-        return Convert.ToHexString(hash);
+        using(var sha256 = SHA256.Create())  
+        {
+            var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password)); 
+            var hash = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+
+            return hash;
+        }
     }
 }

@@ -8,10 +8,12 @@
   <component name="ChangeListManager">
     <list default="true" id="3f0792f6-7a3e-403d-8890-cb05d55db6be" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApplication1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WebApplication1/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApplication1.Domain/Entity/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1.Domain/Entity/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApplication1.Domain/Helpers/HashPasswordHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1.Domain/Helpers/HashPasswordHelper.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebApplication1.Domain/ViewModels/UserViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1.Domain/ViewModels/UserViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApplication1.Service/Implementations/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1.Service/Implementations/UserService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApplication1/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1/Controllers/HomeController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApplication1/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebApplication1/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1/Views/Home/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApplication1/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1/Views/Shared/_Layout.cshtml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +21,8 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bd1d5c50194fea68ff3559c160230b0ab50f5acf4ce3061bffd6d62958e2182/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
