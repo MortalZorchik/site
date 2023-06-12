@@ -11,4 +11,10 @@
       <ProjectReference Include="..\WebApplication1.Domain\WebApplication1.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.5" />
+      <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.31.0" />
+      <PackageReference Include="Microsoft.Owin.Security.Google" Version="4.2.2" />
+    </ItemGroup>
+
 </Project>

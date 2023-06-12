@@ -8,12 +8,20 @@
   <component name="ChangeListManager">
     <list default="true" id="3f0792f6-7a3e-403d-8890-cb05d55db6be" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApplication1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WebApplication1/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApplication1.Domain/Entity/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1.Domain/Entity/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApplication1.DAL/ApplicationDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1.DAL/ApplicationDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApplication1.DAL/WebApplication1.DAL.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1.DAL/WebApplication1.DAL.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebApplication1.Domain/Helpers/HashPasswordHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1.Domain/Helpers/HashPasswordHelper.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApplication1.Domain/ViewModels/UserViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1.Domain/ViewModels/UserViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApplication1.Domain/Response/BaseResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1.Domain/Response/BaseResponse.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApplication1.Domain/WebApplication1.Domain.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1.Domain/WebApplication1.Domain.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApplication1.Service/WebApplication1.Service.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1.Service/WebApplication1.Service.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApplication1/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1/Controllers/AccountController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApplication1/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1/Controllers/HomeController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebApplication1/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApplication1/Views/Home/GetUsers.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1/Views/Home/GetUsers.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebApplication1/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1/Views/Home/Index.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebApplication1/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1/Views/Shared/_Layout.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApplication1/WebApplication1.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1/WebApplication1.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApplication1/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1/appsettings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,9 +29,8 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bd1d5c50194fea68ff3559c160230b0ab50f5acf4ce3061bffd6d62958e2182/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f9749fe3576a687c3c42f3794cefe8f8d91e62f939c66c0a32dbb3f74255/ManualResetEventSlim.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -34,14 +41,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.general",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.WebApplication1: https">
     <configuration name="WebApplication1: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/WebApplication1/WebApplication1.csproj" />
@@ -98,6 +107,10 @@
       <option name="presentableId" value="Default" />
       <updated>1686382078047</updated>
       <workItem from="1686382081344" duration="7753000" />
+      <workItem from="1686538932076" duration="185000" />
+      <workItem from="1686539199216" duration="1031000" />
+      <workItem from="1686540780862" duration="1756000" />
+      <workItem from="1686543748406" duration="20000000" />
     </task>
     <servers />
   </component>
@@ -119,5 +132,68 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/WebApplication1.Service/Implementations/YoutubeService.cs</url>
+          <line>46</line>
+          <properties documentPath="D:\GitRep\site\WebApplication1\WebApplication1.Service\Implementations\YoutubeService.cs" initialLine="45" containingFunctionPresentation="method 'GetProgrammersChannels'">
+            <startOffsets>
+              <option value="1469" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1470" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/WebApplication1.Service/Implementations/YoutubeService.cs</url>
+          <line>61</line>
+          <properties documentPath="D:\GitRep\site\WebApplication1\WebApplication1.Service\Implementations\YoutubeService.cs" initialLine="55" containingFunctionPresentation="method 'GetProgrammersChannels'">
+            <startOffsets>
+              <option value="2048" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2068" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/WebApplication1/Controllers/GoogleOauthController.cs</url>
+          <line>37</line>
+          <properties documentPath="D:\GitRep\site\WebApplication1\WebApplication1\Controllers\GoogleOauthController.cs" initialLine="41" containingFunctionPresentation="method 'CodeAsync'">
+            <startOffsets>
+              <option value="1578" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1593" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/WebApplication1/Controllers/GoogleOauthController.cs</url>
+          <line>15</line>
+          <properties documentPath="D:\GitRep\site\WebApplication1\WebApplication1\Controllers\GoogleOauthController.cs" initialLine="17" containingFunctionPresentation="method 'RedirectOnOAuthServer'">
+            <startOffsets>
+              <option value="527" />
+            </startOffsets>
+            <endOffsets>
+              <option value="572" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="LaunchSettings">
+        <watch expression="tokenResult" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

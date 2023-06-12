@@ -35,14 +35,5 @@ public class ApplicationDbContext : DbContext
                     .ValueGeneratedOnAdd();
             });
         }
-        
-        /*if (name != null && password != null)
-            modelBuilder.Entity<User>().HasData(
-                new User
-                {
-                    Id = 1, Name = name,
-                    Password = password, Role = Role.Admin
-                }
-            );*/
     }
 }

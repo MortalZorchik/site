@@ -1,0 +1,15 @@
+﻿@model System.Collections.Generic.Dictionary<string,string>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<a href="/Home/Index">На главную</a>
+
+@foreach(var d in @Model)
+{
+    var f = ($"key: {d.Key}  value: {d.Value}");
+    <p>@f</p>
+    
+}

@@ -1,5 +1,4 @@
-﻿using WebApplication1.Domain.ViewModels;
-
+﻿
 namespace WebApplication1.Domain.Response;
 
 public class BaseResponse<T> : IBaseResponse<T>
@@ -13,8 +12,8 @@ public class BaseResponse<T> : IBaseResponse<T>
 
 public interface IBaseResponse<T>
 {
-    
     string Description { get; }
+    
     T Data { get; }
     
     StatusCode StatusCode { get; }

@@ -22,7 +22,6 @@ public class HomeController : Controller
         _logger = logger;
         _userService = userService;
     }
-
     public IActionResult Index()
     {
         return View();
@@ -41,6 +40,7 @@ public class HomeController : Controller
     }
 
     [HttpGet]
+    [Authorize(Roles = "Admin")]
     public async Task<IResult> GetUser(int id)
     {
         var response = await _userService.GetUser(id);
@@ -53,6 +53,7 @@ public class HomeController : Controller
     
     
     [HttpDelete]
+    [Authorize(Roles = "Admin")]
     public async Task<IResult> DeleteUser(int id)
     {
         var response = await _userService.DeleteUser(id);
@@ -64,6 +65,7 @@ public class HomeController : Controller
     }
     
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<IResult> CreateUser(Domain.ViewModels.UserViewModel model)
     {
         var response = await _userService.CreateUser(model);
@@ -71,6 +73,7 @@ public class HomeController : Controller
     }
     
     [HttpPut]
+    [Authorize(Roles = "Admin")]
     public async Task<IResult> UpdateUser(Domain.ViewModels.UserViewModel model)
     {
         var response = await _userService.UpdateUser(model.Id, model);
@@ -88,11 +91,6 @@ public class HomeController : Controller
         Console.WriteLine(types+":"+types.Data);
         return Json(types.Data);
     }
-    
-    
-    
-    
-    
     public IActionResult Privacy()
     {
         return View();

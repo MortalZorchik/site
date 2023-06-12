@@ -22,9 +22,6 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    </li>
                     @if (!User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item">
@@ -33,12 +30,28 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LoginWithGoogle">GoogleLogin</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/GoogleOauth/RedirectOnOAuthServer">GoogleLogin2</a>
+                        </li>
+                        <li class="nav-item">
+                            <div id="g_id_onload"
+                                 data-client_id="897152894798-dpmabhvci7d3pmbnmimbd1kksc90vf4h.apps.googleusercontent.com"
+                                 data-login_uri="https://localhost:7131/signin-google"
+                                 data-your_own_param_1_to_login="any_value"
+                                 data-your_own_param_2_to_login="any_value">
+                                
+                            </div>
+                        </li>
+
                     }
                     else
                     {
                         <li class="nav-item">
                             <form method="post" asp-controller="Account" asp-action="Logout">
-                                <input class="btn" type="submit" value="Выход" />
+                                <input class="btn" style="font-family:'Comic Sans MS'; font-weight: bold; font-size:20px;" type="submit" value="Выход"/>
                             </form>
                         </li>
                     }
@@ -61,8 +74,14 @@
 </footer>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
-@await RenderSectionAsync("Scripts", required: false)
+@if (User.Identity.IsAuthenticated)
+{
+    @RenderSection("Script")
+}
+@if (!User.Identity.IsAuthenticated) 
+{ 
+    IgnoreSection("Script");
+}
 </body>
 </html>

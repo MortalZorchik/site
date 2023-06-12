@@ -5,8 +5,6 @@ namespace WebApplication1.Domain.Helpers;
 
 public class HashPasswordHelper
 {
-    
-    
     public static string HashPassword(string password)
     {
         using(var sha256 = SHA256.Create())  

@@ -3,230 +3,258 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@if (Context.User.Identity.IsAuthenticated)
+{
+    <li>
+        <a>Hello @User.Identity.Name</a>
+        <a>Hello @User.Identity.AuthenticationType</a>
+    </li>
+}
 
-<h2>Список пользователей</h2>
-    <div>
-        <input type="hidden" id="userId" />
-        <p>
-            Имя:<br/>
-            <input id="userName" />
-        </p>
-        <p>
-            Пароль:<br />
-            <input id="userPassword" asp-for="Password" type="password"/>
-        </p>
-        <select asp-for="@Model.Role" id="userRole">
-            <option></option>
-        </select>
-        <p style="margin-top: 100px">
-            <button id="saveBtn">Сохранить</button>
-            <button id="resetBtn">Сбросить</button>
-        </p>
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
     </div>
+
+    <h2>Список пользователей</h2>
+    @if (User.IsInRole("Admin"))
+    {
+        <div>
+            <input type="hidden" id="userId"/>
+            <p>
+                Имя:<br/>
+                <input id="userName"/>
+            </p>
+            <p>
+                Пароль:<br/>
+                <input id="userPassword" asp-for="Password" type="password"/>
+            </p>
+            <select asp-for="@Model.Role" id="userRole">
+                <option></option>
+            </select>
+            <p style="margin-top: 100px">
+                <button id="saveBtn">Сохранить</button>
+                <button id="resetBtn">Сбросить</button>
+            </p>
+        </div>
+    }
+    
     <table>
         <thead><tr><th>Id</th><th>Имя</th><th>Пароль</th><th>Роль</th></tr></thead>
         <tbody>
         </tbody>
     </table>
-  
+
+
 <script>
-    // Получение всех пользователей
-        async function getUsers() {
-          
-            // отправляет запрос и получаем ответ
-            const response = await fetch("/Home/GetUsers/", {
-                method: "GET",
-                headers: { "Accept": "application/json" }
-            });
-            // если запрос прошел нормально
-            if (response.ok === true) {
-                // получаем данные
-                const users = await response.json();
-                console.log("users: "+ users);
-                const rows = document.querySelector("tbody");
-                // добавляем полученные элементы в таблицу
-               
-                users.forEach(user => rows.append(row(user)));
-                
-            }
-                
-        }
-        // Получение одного пользователя
-        async function getUser(id) {
-            const response = await fetch(`/Home/GetUser?id=`+id, {
-                method: "GET",
-                headers: { "Accept": "application/json" }
-            });
-            if (response.ok === true) {
-             
-                const user = await response.json();
-                console.log(user.role);
-                document.getElementById("userId").value = user.id;
-                document.getElementById("userName").value = user.name;
-                document.getElementById("userPassword").value = user.password;
-                document.getElementById("userRole").value = user.role;
-            }
-            else {
-                // если произошла ошибка, получаем сообщение об ошибке
-                const error = await response.json();
-                console.log(error.message); // и выводим его на консоль
-            }
-        }
-        // Добавление пользователя
-        async function createUser(userName, userPassword, userRole) {
-  
-            const response = await fetch("Home/CreateUser?name="+userName+"&password="+userPassword+"&role="+userRole, {
-                method: "POST",
-                headers: { "Accept": "application/json", "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    name: userName,
-                    password: userPassword,
-                    role: userRole
-                })
-            });
-            if (response.ok === true) {
-                console.log(response);
-                const user = await response.json();
-                console.log(user);
-                document.querySelector("tbody").append(row(user));
-            }
-            else {
-                const error = await response.json();
-                console.log(error.message);
-            }
-        }
-        // Изменение пользователя
-        async function editUser(userId, userName, userPassword, userRole) {
-            console.log(userId, userName, userPassword, userRole);
-            const response = await fetch("Home/UpdateUser?id="+userId+"&name="+userName+"&password="+userPassword+"&role="+userRole, {
-                method: "PUT",
-                headers: { "Accept": "application/json", "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    id: userId,
-                    name: userName,
-                    password: userPassword,
-                    role: userRole
-                })
-            });
-            if (response.ok === true) {
-                const user = await response.json();
-                console.log(user);
-                document.querySelector(`tr[data-rowid='${user.id}']`).replaceWith(row(user));
-            }
-            else {
-                const error = await response.json();
-                console.log(error.message);
-            }
-        }
-        // Удаление пользователя
-        async function deleteUser(id) {
-            const response = await fetch(`Home/DeleteUser?id=${id}`, {
-                method: "DELETE",
-                headers: { "Accept": "application/json" }
-            });
-            if (response.ok === true) {
-                const user = await response.json();
-                document.querySelector(`tr[data-rowid='${user.id}']`).remove();
-            }
-            else {
-                const error = await response.json();
-                console.log(error.message);
-            }
-        }
-  
-        // сброс данных формы после отправки
-        function reset() {
-            document.getElementById("userId").value = 
-            document.getElementById("userName").value = 
-            document.getElementById("userPassword").value = ""
-            document.getElementById("userRole").value = ""
-        }
-        // создание строки для таблицы
-        function row(user) {
-            console.log(user)
-            const tr = document.createElement("tr");
-            tr.setAttribute("data-rowid", user.id);
-            
-            const idTd = document.createElement("td");
-            idTd.append(user.id);
-            tr.append(idTd);
-            
-            const nameTd = document.createElement("td");
-            nameTd.append(user.name);
-            tr.append(nameTd);
-  
-            const passwordTd = document.createElement("td");
-            passwordTd.append(user.password);
-            tr.append(passwordTd);
-            
-            const roleTd = document.createElement("td");
-            roleTd.append(user.role);
-            tr.append(roleTd);
-  
-           
-  
-            if (user.role != 2){
-                const linksTd = document.createElement("td");
-                const editLink = document.createElement("button"); 
-                            editLink.append("Изменить");
-                            editLink.addEventListener("click", async() => await getUser(user.id));
-                            linksTd.append(editLink);
+// Получение всех пользователей
+            async function getUsers() {
+              
+                // отправляет запрос и получаем ответ
+                const response = await fetch("/Home/GetUsers/", {
+                    method: "GET",
+                    headers: { "Accept": "application/json" }
+                });
+                // если запрос прошел нормально
+                if (response.ok === true) {
+                    // получаем данные
+                    const users = await response.json();
+                    console.log("users: "+ users);
+                    const rows = document.querySelector("tbody");
+                    // добавляем полученные элементы в таблицу
+                   
+                    users.forEach(user => rows.append(row(user)));
+                    
                   
-                            const removeLink = document.createElement("button"); 
-                            removeLink.append("Удалить");
-                            removeLink.addEventListener("click", async () => await deleteUser(user.id));
-                  
-                            linksTd.append(removeLink);
-                            tr.appendChild(linksTd);
+                    
+                }
+                    
             }
-            
-  
-            return tr;
-        }
-        // сброс значений формы
-        document.getElementById("resetBtn").addEventListener("click", () =>  reset());
-  
-        // отправка формы
-        document.getElementById("saveBtn").addEventListener("click", async () => {
-            
-            const id = document.getElementById("userId").value;
-            const name = document.getElementById("userName").value;
-            const password = document.getElementById("userPassword").value;
-            const role = document.getElementById("userRole").value;
-            if (id === ""){
-                await createUser(name, password,role);}
-            else
-                await editUser(id, name, password,role);
-            reset();
-        });
-  
-        // загрузка пользователей
-        getUsers();
-    </script>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/select2/js/select2.full.min.js"></script><script>
-$('#userRole').select2({
-   placeholder: "Выберите роль",
-   minimumInputLength: 0,
-   allowClear: true,
-   ajax: {
-        type: "POST",
-        url: "@Url.Action("GetTypes", "Home")",
-        dataType: "json",
-        processResults: function (result) {
-            return {
-                results: $.map(result, function (val, index) {
-                    return {
-                        id: index, 
-                        text: val
-                    };
-                }),
-            };
-        }
-    }
-});
+            // создание строки для таблицы
+                        function row(user) {
+                            console.log(user)
+                            const tr = document.createElement("tr");
+                            tr.setAttribute("data-rowid", user.id);
+                            
+                            const idTd = document.createElement("td");
+                            idTd.append(user.id);
+                            tr.append(idTd);
+                            
+                            const nameTd = document.createElement("td");
+                            nameTd.append(user.name);
+                            tr.append(nameTd);
+                  
+                            const passwordTd = document.createElement("td");
+                            passwordTd.append(user.password);
+                            tr.append(passwordTd);
+                            
+                            const roleTd = document.createElement("td");
+                            roleTd.append(user.role);
+                            tr.append(roleTd);
+                  
+                            
+                            if (user.role !=  2 ){
+                                const linksTd = document.createElement("td");
+                                linksTd.className = "alert";
+                                const editLink = document.createElement("button"); 
+                                            
+                                            editLink.append("Изменить");
+                                            editLink.addEventListener("click", async() => await getUser(user.id));
+                                            linksTd.append(editLink);
+                                  
+                                            const removeLink = document.createElement("button"); 
+                                            removeLink.append("Удалить");
+                                            removeLink.addEventListener("click", async () => await deleteUser(user.id));
+                                  
+                                            linksTd.append(removeLink);
+                                            tr.appendChild(linksTd);
+                            }
+                            
+                            return tr;
+                        }
+                        getUsers();
+                        
+                        
 </script>
+
+@section Script{
+<script>
+        
+            // Получение одного пользователя
+            async function getUser(id) {
+                const response = await fetch(`/Home/GetUser?id=`+id, {
+                    method: "GET",
+                    headers: { "Accept": "application/json" }
+                });
+                if (response.ok === true) {
+                 
+                    const user = await response.json();
+                    console.log(user.role);
+                    document.getElementById("userId").value = user.id;
+                    document.getElementById("userName").value = user.name;
+                    document.getElementById("userPassword").value = user.password;
+                    document.getElementById("userRole").value = user.role;
+                }
+                else {
+                    // если произошла ошибка, получаем сообщение об ошибке
+                    const error = await response.json();
+                    console.log(error.message); // и выводим его на консоль
+                }
+            }
+            // Добавление пользователя
+            async function createUser(userName, userPassword, userRole) {
+      
+                const response = await fetch("Home/CreateUser?name="+userName+"&password="+userPassword+"&role="+userRole, {
+                    method: "POST",
+                    headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        name: userName,
+                        password: userPassword,
+                        role: userRole
+                    })
+                });
+                if (response.ok === true) {
+                    console.log(response);
+                    const user = await response.json();
+                    console.log(user);
+                    document.querySelector("tbody").append(row(user));
+                }
+                else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            }
+            // Изменение пользователя
+            async function editUser(userId, userName, userPassword, userRole) {
+                console.log(userId, userName, userPassword, userRole);
+                const response = await fetch("Home/UpdateUser?id="+userId+"&name="+userName+"&password="+userPassword+"&role="+userRole, {
+                    method: "PUT",
+                    headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        id: userId,
+                        name: userName,
+                        password: userPassword,
+                        role: userRole
+                    })
+                });
+                if (response.ok === true) {
+                    const user = await response.json();
+                    console.log(user);
+                    document.querySelector(`tr[data-rowid='${user.id}']`).replaceWith(row(user));
+                }
+                else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            }
+            // Удаление пользователя
+            async function deleteUser(id) {
+                const response = await fetch(`Home/DeleteUser?id=${id}`, {
+                    method: "DELETE",
+                    headers: { "Accept": "application/json" }
+                });
+                if (response.ok === true) {
+                    const user = await response.json();
+                    document.querySelector(`tr[data-rowid='${user.id}']`).remove();
+                }
+                else {
+                    const error = await response.json();
+                    console.log(error.message);
+                }
+            }
+      
+            // сброс данных формы после отправки
+            function reset() {
+                document.getElementById("userId").value = 
+                document.getElementById("userName").value = 
+                document.getElementById("userPassword").value = ""
+                document.getElementById("userRole").value = ""
+            }
+            
+
+            // сброс значений формы
+            document.getElementById("resetBtn").addEventListener("click", () =>  reset());
+      
+            // отправка формы
+            document.getElementById("saveBtn").addEventListener("click", async () => {
+                
+                const id = document.getElementById("userId").value;
+                const name = document.getElementById("userName").value;
+                const password = document.getElementById("userPassword").value;
+                const role = document.getElementById("userRole").value;
+                if (id === ""){
+                    await createUser(name, password,role);}
+                else
+                    await editUser(id, name, password,role);
+                reset();
+            });
+
+      
+            // загрузка пользователей
+ </script>
+}
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/select2/js/select2.full.min.js"></script><script>
+    $('#userRole').select2({
+       placeholder: "Выберите роль",
+       minimumInputLength: 0,
+       allowClear: true,
+       ajax: {
+            type: "POST",
+            url: "@Url.Action("GetTypes", "Home")",
+            dataType: "json",
+            processResults: function (result) {
+                return {
+                    results: $.map(result, function (val, index) {
+                        return {
+                            id: index, 
+                            text: val
+                        };
+                    }),
+                };
+            }
+        }
+    });
+    </script>
+
+
